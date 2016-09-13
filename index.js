@@ -13,7 +13,6 @@ var server = http.createServer(function (request, resp) {
     headers["Access-Control-Max-Age"] = '86400'; // 24 hours
     headers["Access-Control-Allow-Headers"] = "X-Requested-With, Access-Control-Allow-Origin, X-HTTP-Method-Override, Content-Type, Authorization, Accept";
 
-    console.log(request.url);
     // landing page
     if (request.url === '/' || request.url === '/favicon.ico') {
       readFile('./readme.md', {encoding: 'utf-8'}, (err, markdownString) => {

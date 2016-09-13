@@ -17,7 +17,8 @@
     "start": "node index.js"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "readme.md"
   ],
   "keywords": [
     ""
