@@ -1,7 +1,7 @@
 {
   "name": "cors-now",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "reverse proxy with CORS headers.",
   "license": "MIT",
   "repository": "hemanth/cors-now",
