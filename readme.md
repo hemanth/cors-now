@@ -5,7 +5,7 @@
 
 ## Usage:
 
-__Just do a `fetch on the below:__
+__Just do a `fetch` on the below:__
 
 ```
 https://cors.now.sh/<url>

@@ -23,7 +23,8 @@
     ""
   ],
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "marked": "^0.3.6"
   },
   "devDependencies": {}
 }
