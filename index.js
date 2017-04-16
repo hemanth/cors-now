@@ -3,15 +3,13 @@ const { parse } = require('url');
 const pipe = require('promisepipe');
 const fetch = require('node-fetch');
 const marked = require('marked-promise');
+const access = require('access-control');
 const { readFile } = require('fs-promise');
 
+const cors = access();
+
 module.exports = async (req, res) => {
-    var headers = {};
-    headers["Access-Control-Allow-Origin"] = "*";
-    headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
-    headers["Access-Control-Allow-Credentials"] = true;
-    headers["Access-Control-Max-Age"] = '86400'; // 24 hours
-    headers["Access-Control-Allow-Headers"] = "X-reqed-With, Access-Control-Allow-Origin, X-HTTP-Method-Override, Content-Type, Authorization, Accept";
+    if (cors(req, res)) return;
 
     // landing page
     if (req.url === '/' || req.url === '/favicon.ico') {
