@@ -1,4 +1,5 @@
 'use strict';
+const { parse } = require('url');
 const pipe = require('promisepipe');
 const fetch = require('node-fetch');
 const marked = require('marked-promise');
@@ -28,8 +29,13 @@ module.exports = async (req, res) => {
         }
     } else {
         // fetch and respond
-        const endpoint = req.url.substring(1)
-        const response = await fetch(endpoint, { headers: req.headers })
+        const endpoint = req.url.substring(1);
+        const parsed = parse(endpoint);
+        const response = await fetch(endpoint, {
+          headers: Object.assign({}, req.headers, {
+            'host': parsed.hostname
+          })
+        });
 
         // send headers
         res.statusCode = response.status;
