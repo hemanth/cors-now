@@ -14,7 +14,9 @@ module.exports = async (req, res) => {
     if (req.url === '/' || req.url === '/favicon.ico') {
         // landing page
         try {
-            const markdownString = await readFile('./readme.md', {encoding: 'utf8'});
+            const markdownString = await readFile('./readme.md', {
+                encoding: 'utf8'
+            });
             const content = await marked(markdownString);
 
             // send homepage
@@ -23,21 +25,22 @@ module.exports = async (req, res) => {
         } catch (err) {
             res.statusCode = 500;
             res.setHeader('Content-Type', 'application/json');
-            return { error: 'Yikes! Report to @gnumanth' }
+            return { error: 'Yikes! Report to @gnumanth' };
         }
     } else {
         // fetch and respond
         const endpoint = req.url.substring(1);
         const parsed = parse(endpoint);
+        const proxyHeaders = Object.assign({}, req.headers, {
+            host: parsed.hostname
+        });
         const response = await fetch(endpoint, {
-          headers: Object.assign({}, req.headers, {
-            'host': parsed.hostname
-          })
+            headers: proxyHeaders
         });
 
         // proxy response
         res.statusCode = response.status;
-        res.setHeader('Content-Type', response.headers.get("content-type"));
+        res.setHeader('Content-Type', response.headers.get('content-type'));
         await pipe(response.body, res);
     }
-}
+};
