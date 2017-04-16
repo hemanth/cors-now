@@ -11,8 +11,8 @@ const cors = access();
 module.exports = async (req, res) => {
     if (cors(req, res)) return;
 
-    // landing page
     if (req.url === '/' || req.url === '/favicon.ico') {
+        // landing page
         try {
             const markdownString = await readFile('./readme.md', {encoding: 'utf8'});
             const content = await marked(markdownString);
@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
           })
         });
 
-        // send headers
+        // proxy response
         res.statusCode = response.status;
         res.setHeader('Content-Type', response.headers.get("content-type"));
         await pipe(response.body, res);
