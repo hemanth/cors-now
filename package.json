@@ -26,8 +26,8 @@
     ""
   ],
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
     "marked": "^0.3.6",
+    "node-fetch": "^2.0.0-alpha.3",
     "snyk": "^1.25.0"
   },
   "devDependencies": {},

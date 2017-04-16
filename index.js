@@ -1,7 +1,7 @@
 'use strict';
 const http = require('http');
 const url = require('url');
-const fetch = require('isomorphic-fetch');
+const fetch = require('node-fetch');
 const marked = require('marked');
 const readFile = require('fs').readFile;
 
