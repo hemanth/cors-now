@@ -1,7 +1,8 @@
 'use strict';
+const http = require('http');
+const https = require('https');
 const { parse } = require('url');
 const pipe = require('promisepipe');
-const fetch = require('node-fetch');
 const marked = require('marked-promise');
 const access = require('access-control');
 const { readFile } = require('fs-promise');
@@ -28,24 +29,35 @@ module.exports = async (req, res) => {
             return { error: 'Yikes! Report to @gnumanth' };
         }
     } else {
-        // fetch and respond
+        // proxy and respond
         const endpoint = req.url.substring(1);
-        const { protocol, hostname } = parse(endpoint);
-        if (!('http:' === protocol || 'https:' === protocol)) {
+        const parsed = parse(endpoint);
+        let mod;
+        if ('http:' === parsed.protocol) {
+          mod = http;
+        } else if ('https:' === parsed.protocol) {
+          mod = https;
+        } else {
             res.statusCode = 400;
             res.setHeader('Content-Type', 'application/json');
             return { error: 'Only absolute URLs are supported' };
         }
-        const proxyHeaders = Object.assign({}, req.headers, {
-            host: hostname
+        parsed.headers = Object.assign({}, req.headers, {
+            host: parsed.hostname
         });
-        const response = await fetch(endpoint, {
-            headers: proxyHeaders
-        });
+        const response = await fetch(mod, parsed);
 
         // proxy response
-        res.statusCode = response.status;
-        res.setHeader('Content-Type', response.headers.get('content-type'));
-        await pipe(response.body, res);
+        res.statusCode = response.statusCode;
+        for (const name of Object.keys(response.headers)) {
+          res.setHeader(name, response.headers[name]);
+        }
+        await pipe(response, res);
     }
 };
+
+function fetch(mod, parsed) {
+  return new Promise((resolve, reject) => {
+    mod.get(parsed, resolve).once('error', reject);
+  });
+}

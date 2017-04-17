@@ -30,7 +30,6 @@
     "fs-promise": "^2.0.2",
     "marked-promise": "^2.0.0",
     "micro": "^7.3.2",
-    "node-fetch": "^2.0.0-alpha.3",
     "promisepipe": "^2.0.0"
   },
   "devDependencies": {
