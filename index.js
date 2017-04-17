@@ -30,9 +30,14 @@ module.exports = async (req, res) => {
     } else {
         // fetch and respond
         const endpoint = req.url.substring(1);
-        const parsed = parse(endpoint);
+        const { protocol, hostname } = parse(endpoint);
+        if (!('http:' === protocol || 'https:' === protocol)) {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            return { error: 'Only absolute URLs are supported' };
+        }
         const proxyHeaders = Object.assign({}, req.headers, {
-            host: parsed.hostname
+            host: hostname
         });
         const response = await fetch(endpoint, {
             headers: proxyHeaders
