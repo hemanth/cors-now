@@ -43,9 +43,9 @@ module.exports = async (req, res) => {
         const parsed = parse(endpoint);
         let mod;
         if ('http:' === parsed.protocol) {
-          mod = http;
+            mod = http;
         } else if ('https:' === parsed.protocol) {
-          mod = https;
+            mod = https;
         } else {
             res.statusCode = 400;
             res.setHeader('Content-Type', 'application/json');
@@ -59,15 +59,15 @@ module.exports = async (req, res) => {
         // proxy response
         res.statusCode = response.statusCode;
         for (const name of Object.keys(response.headers)) {
-          if (hopByHopHeaders.has(name)) continue;
-          res.setHeader(name, response.headers[name]);
+            if (hopByHopHeaders.has(name)) continue;
+            res.setHeader(name, response.headers[name]);
         }
         await pipe(response, res);
     }
 };
 
 function fetch(mod, parsed) {
-  return new Promise((resolve, reject) => {
-    mod.get(parsed, resolve).once('error', reject);
-  });
+    return new Promise((resolve, reject) => {
+        mod.get(parsed, resolve).once('error', reject);
+    });
 }
