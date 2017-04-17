@@ -1,67 +1,51 @@
 'use strict';
-const http = require('http');
-const url = require('url');
-const fetch = require('isomorphic-fetch');
-const marked = require('marked');
-const readFile = require('fs').readFile;
+const { parse } = require('url');
+const pipe = require('promisepipe');
+const fetch = require('node-fetch');
+const marked = require('marked-promise');
+const access = require('access-control');
+const { readFile } = require('fs-promise');
 
-var server = http.createServer(function (request, resp) {
-    var headers = {};
-    headers["Access-Control-Allow-Origin"] = "*";
-    headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
-    headers["Access-Control-Allow-Credentials"] = true;
-    headers["Access-Control-Max-Age"] = '86400'; // 24 hours
-    headers["Access-Control-Allow-Headers"] = "X-Requested-With, Access-Control-Allow-Origin, X-HTTP-Method-Override, Content-Type, Authorization, Accept";
+const cors = access();
 
-    // landing page
-    if (request.url === '/' || request.url === '/favicon.ico') {
-      readFile('./readme.md', {encoding: 'utf-8'}, (err, markdownString) => {
-        marked(markdownString, (err, content) => {
-          if (err) {
-            resp.end(JSON.stringify({ error: 'Yikes! Report to @gnumanth'}));
-          }
-          // send headers
-          headers['Content-Type'] = 'text/html';
-          resp.writeHead(200, headers);
-          resp.end(content);
-        });
-      });
+module.exports = async (req, res) => {
+    if (cors(req, res)) return;
+
+    if (req.url === '/' || req.url === '/favicon.ico') {
+        // landing page
+        try {
+            const markdownString = await readFile('./readme.md', {
+                encoding: 'utf8'
+            });
+            const content = await marked(markdownString);
+
+            // send homepage
+            res.setHeader('Content-Type', 'text/html; charset=utf8');
+            res.end(content);
+        } catch (err) {
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json');
+            return { error: 'Yikes! Report to @gnumanth' };
+        }
     } else {
-      //fetch and respond
-      fetch(request.url.replace('/',''))
-      .then(response => {
-        let contentType = response.headers.get("content-type");
-        // send headers
-        headers['Content-Type'] = contentType;
-        resp.writeHead(200, headers);
+        // fetch and respond
+        const endpoint = req.url.substring(1);
+        const { protocol, hostname } = parse(endpoint);
+        if (!('http:' === protocol || 'https:' === protocol)) {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            return { error: 'Only absolute URLs are supported' };
+        }
+        const proxyHeaders = Object.assign({}, req.headers, {
+            host: hostname
+        });
+        const response = await fetch(endpoint, {
+            headers: proxyHeaders
+        });
 
-        // The below shall be a module later ;)
-        if (!!~contentType.indexOf('json')) {
-          return response.json();
-        }
-        else if (!!~contentType.indexOf('text')) {
-          type = 'text'
-          return response.text();
-        }
-        else if (!!~contentType.indexOf('blob')) {
-          type = 'blob'
-          return response.blob();
-        }
-        else if (!!~contentType.indexOf('buffer')) {
-          type = 'buffer'
-          return response.arrayBuffer();
-        } 
-      })
-      .then(data => resp.end(JSON.stringify(data)))
-      .catch(error => {
-        resp.end(JSON.stringify({ error: error.toString()}));
-      });
+        // proxy response
+        res.statusCode = response.status;
+        res.setHeader('Content-Type', response.headers.get('content-type'));
+        await pipe(response.body, res);
     }
-});
-
-var port = process.env.PORT || 3000;
-server.listen(port, function() {
-    console.log("Server running at http://127.0.0.1/ on port " + port);
-});
-
-
+};

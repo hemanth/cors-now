@@ -11,10 +11,10 @@
     "url": "h3manth.com"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": "^6.0.0"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "micro index.js",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect"
   },
@@ -26,10 +26,15 @@
     ""
   ],
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
-    "marked": "^0.3.6",
+    "access-control": "^1.0.0",
+    "fs-promise": "^2.0.2",
+    "marked-promise": "^2.0.0",
+    "micro": "^7.3.2",
+    "node-fetch": "^2.0.0-alpha.3",
+    "promisepipe": "^2.0.0"
+  },
+  "devDependencies": {
     "snyk": "^1.25.0"
   },
-  "devDependencies": {},
   "snyk": true
 }
