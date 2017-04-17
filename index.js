@@ -9,6 +9,15 @@ const { readFile } = require('fs-promise');
 
 const cors = access();
 
+const hopByHopHeaders = new Set([
+    'Connection',
+    'Keep-Alive',
+    'Public',
+    'Proxy-Authenticate',
+    'Transfer-Encoding',
+    'Upgrade'
+]);
+
 module.exports = async (req, res) => {
     if (cors(req, res)) return;
 
@@ -50,6 +59,7 @@ module.exports = async (req, res) => {
         // proxy response
         res.statusCode = response.statusCode;
         for (const name of Object.keys(response.headers)) {
+          if (hopByHopHeaders.has(name)) continue;
           res.setHeader(name, response.headers[name]);
         }
         await pipe(response, res);
