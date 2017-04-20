@@ -6,3 +6,5 @@ patch:
   'npm:marked:20170112':
     - marked:
         patched: '2017-02-10T15:02:59.043Z'
+    - marked-promise > marked:
+        patched: '2017-04-20T00:51:30.233Z'

@@ -30,10 +30,9 @@
     "fs-promise": "^2.0.2",
     "marked-promise": "^2.0.0",
     "micro": "^7.3.2",
-    "promisepipe": "^2.0.0"
+    "promisepipe": "^2.0.0",
+    "snyk": "^1.29.0"
   },
-  "devDependencies": {
-    "snyk": "^1.25.0"
-  },
+  "devDependencies": {},
   "snyk": true
 }
