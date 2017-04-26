@@ -10,12 +10,12 @@ const { readFile } = require('fs-promise');
 const cors = access();
 
 const hopByHopHeaders = new Set([
-    'Connection',
-    'Keep-Alive',
-    'Public',
-    'Proxy-Authenticate',
-    'Transfer-Encoding',
-    'Upgrade'
+    'connection',
+    'keep-alive',
+    'public',
+    'proxy-authenticate',
+    'transfer-encoding',
+    'upgrade'
 ]);
 
 module.exports = async (req, res) => {
