@@ -1,7 +1,7 @@
 'use strict';
 const http = require('http');
 const https = require('https');
-const { parse } = require('url');
+const { parse, format } = require('url');
 const pipe = require('promisepipe');
 const marked = require('marked-promise');
 const access = require('access-control');
@@ -62,6 +62,21 @@ module.exports = async (req, res) => {
             if (hopByHopHeaders.has(name)) continue;
             res.setHeader(name, response.headers[name]);
         }
+
+        // if a 3xx response happened with a redirect, then absolutize
+        // it and re-proxy to this CORS proxy
+        let location = res.getHeader('location');
+        if (location) {
+            const locationParsed = parse(location);
+            if (!('http:' === locationParsed.protocol || 'https:' === locationParsed.protocol)) {
+              location = format(Object.assign({}, parsed, {
+                  path: null,
+                  pathname: location
+              }));
+            }
+            res.setHeader('location', '/' + location);
+        }
+
         await pipe(response, res);
     }
 };
