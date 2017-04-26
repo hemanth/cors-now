@@ -54,7 +54,7 @@ module.exports = async (req, res) => {
         parsed.headers = Object.assign({}, req.headers, {
             host: parsed.hostname
         });
-        const response = await fetch(mod, parsed);
+        const response = await get(mod, parsed);
 
         // proxy response
         res.statusCode = response.statusCode;
@@ -66,7 +66,7 @@ module.exports = async (req, res) => {
     }
 };
 
-function fetch(mod, parsed) {
+function get(mod, parsed) {
     return new Promise((resolve, reject) => {
         mod.get(parsed, resolve).once('error', reject);
     });
