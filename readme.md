@@ -24,7 +24,7 @@ P.S: Make sure you give the absolute URL, or else you will see an error like:
 
 ```js
 {
-  "error": "Error: only absolute urls are supported"
+  "error": "Only absolute urls are supported"
 }
 ```
 
