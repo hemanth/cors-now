@@ -63,10 +63,10 @@ module.exports = async (req, res) => {
 
             let value = res.getHeader(name);
             if (value) {
-              // Append to existing values, like "Vary" from the CORS module
-              value += `, ${response.headers[name]}`;
+                // Append to existing values, like "Vary" from the CORS module
+                value += `, ${response.headers[name]}`;
             } else {
-              value = response.headers[name];
+                value = response.headers[name];
             }
 
             res.setHeader(name, value);
@@ -77,11 +77,16 @@ module.exports = async (req, res) => {
         let location = res.getHeader('location');
         if (location) {
             const locationParsed = parse(location);
-            if (!('http:' === locationParsed.protocol || 'https:' === locationParsed.protocol)) {
-              location = format(Object.assign({}, parsed, {
-                  path: null,
-                  pathname: location
-              }));
+            if (
+                !('http:' === locationParsed.protocol ||
+                    'https:' === locationParsed.protocol)
+            ) {
+                location = format(
+                    Object.assign({}, parsed, {
+                        path: null,
+                        pathname: location
+                    })
+                );
             }
             res.setHeader('location', '/' + location);
         }
