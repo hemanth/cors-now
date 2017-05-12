@@ -60,7 +60,16 @@ module.exports = async (req, res) => {
         res.statusCode = response.statusCode;
         for (const name of Object.keys(response.headers)) {
             if (hopByHopHeaders.has(name)) continue;
-            res.setHeader(name, response.headers[name]);
+
+            let value = res.getHeader(name);
+            if (value) {
+              // Append to existing values, like "Vary" from the CORS module
+              value += `, ${response.headers[name]}`;
+            } else {
+              value = response.headers[name];
+            }
+
+            res.setHeader(name, value);
         }
 
         // if a 3xx response happened with a redirect, then absolutize
