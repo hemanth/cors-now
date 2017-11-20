@@ -31,7 +31,7 @@
     "marked-promise": "^2.0.0",
     "micro": "^7.3.2",
     "promisepipe": "^2.0.0",
-    "snyk": "^1.29.0"
+    "snyk": "^1.46.0"
   },
   "devDependencies": {},
   "snyk": true
