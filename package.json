@@ -10,9 +10,6 @@
     "email": "hemanth.hm@gmail.com",
     "url": "h3manth.com"
   },
-  "engines": {
-    "node": "^6.0.0"
-  },
   "scripts": {
     "start": "micro index.js",
     "snyk-protect": "snyk protect",
@@ -22,14 +19,11 @@
     "index.js",
     "readme.md"
   ],
-  "keywords": [
-    ""
-  ],
   "dependencies": {
     "access-control": "^1.0.0",
     "fs-promise": "^2.0.2",
     "marked-promise": "^2.0.0",
-    "micro": "^7.3.2",
+    "micro": "^9.3.2",
     "promisepipe": "^2.0.0",
     "snyk": "^1.46.0"
   },
