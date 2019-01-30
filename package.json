@@ -1,38 +1,32 @@
 {
-  "name": "cors-now",
-  "private": true,
-  "version": "1.0.0",
-  "description": "reverse proxy with CORS headers.",
-  "license": "MIT",
-  "repository": "hemanth/cors-now",
-  "author": {
-    "name": "Hemanth.HM",
-    "email": "hemanth.hm@gmail.com",
-    "url": "h3manth.com"
-  },
-  "engines": {
-    "node": "^6.0.0"
-  },
-  "scripts": {
-    "start": "micro index.js",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
-  },
-  "files": [
-    "index.js",
-    "readme.md"
-  ],
-  "keywords": [
-    ""
-  ],
-  "dependencies": {
-    "access-control": "^1.0.0",
-    "fs-promise": "^2.0.2",
-    "marked-promise": "^2.0.0",
-    "micro": "^7.3.2",
-    "promisepipe": "^2.0.0",
-    "snyk": "^1.46.0"
-  },
-  "devDependencies": {},
-  "snyk": true
+	"name": "cors-now",
+	"private": true,
+	"version": "1.0.0",
+	"description": "reverse proxy with CORS headers.",
+	"license": "MIT",
+	"repository": "hemanth/cors-now",
+	"author": {
+		"name": "Hemanth.HM",
+		"email": "hemanth.hm@gmail.com",
+		"url": "h3manth.com"
+	},
+	"scripts": {
+		"start": "micro index.js",
+		"snyk-protect": "snyk protect",
+		"prepublish": "npm run snyk-protect"
+	},
+	"files": [
+		"index.js",
+		"readme.md"
+	],
+	"dependencies": {
+		"access-control": "^1.0.0",
+		"fs-promise": "^2.0.2",
+		"marked-promise": "^2.0.0",
+		"micro": "^7.3.2",
+		"promisepipe": "^2.0.0",
+		"snyk": "^1.46.0"
+	},
+	"devDependencies": {},
+	"snyk": true
 }
