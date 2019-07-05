@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.8.0
+version: v1.13.5
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -11,3 +11,28 @@ patch:
   'npm:marked:20170907':
     - marked-promise > marked:
         patched: '2017-10-27T04:51:06.627Z'
+  SNYK-JS-LODASH-450202:
+    - snyk > snyk-mvn-plugin > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
+    - snyk > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
+    - snyk > snyk-nuget-plugin > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
+    - snyk > snyk-nodejs-lockfile-parser > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
+    - snyk > @snyk/dep-graph > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
+    - snyk > inquirer > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
+    - snyk > snyk-config > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
+    - snyk > snyk-nodejs-lockfile-parser > graphlib > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
+    - snyk > snyk-go-plugin > graphlib > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
+    - snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
+    - micro > args > string-similarity > lodash:
+        patched: '2019-07-05T06:12:56.975Z'
