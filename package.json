@@ -26,12 +26,12 @@
     ""
   ],
   "dependencies": {
-    "access-control": "^1.0.0",
-    "fs-promise": "^2.0.2",
+    "access-control": "^1.0.1",
+    "fs-extra": "^3.0",
     "marked-promise": "^2.0.0",
-    "micro": "^7.3.2",
-    "promisepipe": "^2.0.0",
-    "snyk": "^1.46.0"
+    "micro": "^9.3.4",
+    "promisepipe": "^3.0.0",
+    "snyk": "^1.437.4"
   },
   "devDependencies": {},
   "snyk": true
