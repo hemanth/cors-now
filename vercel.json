@@ -1,0 +1,14 @@
+{
+    "alias": "plaer3.now.sh",
+    "version": 2,
+    "name": "up",
+    "builds": [
+        { "src": "*.js", "use": "@now/node" }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.js"
+      }
+    ]
+}
